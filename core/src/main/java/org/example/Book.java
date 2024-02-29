@@ -90,40 +90,46 @@ public class Book implements Comparable, Serializable {
             return null;
         }
     }
+
     @Override
-    public int compareTo(Object o) { //0 = equal, -1 = Null, 1= unequal
-        int comparison = 1;
-        if (o == null) {
-            comparison = -1;
-        } else if (o == this) {
-            comparison = 0;
+    public boolean equals(Object o)
+    {
+        boolean equal = false;
+        if (((Book) o) == null) {
+            equal = false;
         }
-        else if (((Book) o).getAuthor().equalsIgnoreCase(this.author)) {
-            if (((Book) o).getTitle().equalsIgnoreCase(this.title)) {
-                if (((Book) o).getPublishDate().equalsIgnoreCase(this.publishDate)) {
-                    comparison = 0;
-                }
-            }
+        else if (((Book) o) == this) {
+            equal = true;
         }
-        return comparison;
+        else if (((Book) o).getAuthor().equalsIgnoreCase(this.getAuthor()) &&
+                ((Book) o).getTitle().equalsIgnoreCase(this.getTitle()) &&
+                ((Book) o).getPublishDate().equalsIgnoreCase(this.getPublishDate()))
+        {
+            equal = true;
+        }
+        return equal;
+    }
+    @Override
+    public int compareTo(Object o) { //0 = equal, -1 = before, 1= after, 2 = error
+        int position = 2;
+        char[] thisBook = concatenateBookAttributes(this);
+        char[] otherBook = concatenateBookAttributes(((Book) o));
+        if (thisBook[0] < otherBook[0]) {
+            position = -1;
+        }
+        else if (thisBook[0] > otherBook[0]) {
+            position = 1;
+        }
+        else {
+            position = 0;
+        }
+        return position;
     }
 
-    public static boolean compareBookSets(TreeSet<Book> set1, TreeSet<Book> set2) {
-        boolean result = true;
-        if (set1.size() != set2.size()){
-            result = false;
-        }
-
-        // Iterate over the sets and compare each element
-        Iterator<Book> iter1 = set1.iterator();
-        Iterator<Book> iter2 = set2.iterator();
-        while (iter1.hasNext() && iter2.hasNext()) {
-            Book book1 = iter1.next();
-            Book book2 = iter2.next();
-            if (book1.compareTo(book2) != 0) {
-                result = false; // If any elements are not equal, sets are not equal
-            }
-        }
-        return result; // All elements are equal
+    private char[] concatenateBookAttributes(Book book){
+        String concatenatedBook = book.getAuthor() + book.getTitle() + book.getPublishDate();
+        return concatenatedBook.toCharArray();
     }
+
+
 }

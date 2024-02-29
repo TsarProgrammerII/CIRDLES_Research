@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.TreeSet;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookTest {
@@ -41,42 +42,35 @@ class BookTest {
     }
 
     @Test
-    void mainTest() {
-        boolean equals = false;
+    void csvSerializationDeserializationTest() {
         Path path = Paths.get("./Book.csv");
         Book.serializeToCSV(path, testBooks);
 
         TreeSet<Book> otherBooks = Book.deserializeFromCSV(path);
 
-        equals = Book.compareBookSets(testBooks, otherBooks);
+        System.out.println(testBooks.equals(otherBooks));
 
-        assertTrue(equals);
+        assertEquals(testBooks, otherBooks);
     }
 
     @Test
     void xmlSerializationDeserializationTest() {
-        boolean equals = false;
         Path path = Paths.get("./Books.xml");
         Book.serializeToXML(path, testBooks);
 
         TreeSet<Book> otherBooks = Book.deserializeFromXML(path);
 
-        equals = Book.compareBookSets(testBooks, otherBooks);
-
-        assertTrue(equals);
+        assertEquals(testBooks, otherBooks);
     }
 
     @Test
     void binarySerializationDeserializationTest() {
-        boolean equals = false;
         String path = "./Book.ser";
         TreeSet<Object> bookObjects = (TreeSet<Object>) (Object) testBooks;
         BinarySerialization.serializeToBinary(path, bookObjects);
 
         TreeSet<Book> otherBooks = (TreeSet<Book>) (Object) BinarySerialization.deserializeFromBinary(path);
 
-        equals = Book.compareBookSets(testBooks, otherBooks);
-
-        assertTrue(equals);
+        assertEquals(testBooks, otherBooks);
     }
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="187.0" prefWidth="301.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.app.BookController">
+  <padding>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+  </padding>
+
+  <Label  prefHeight="67.0" prefWidth="148.0" text="The Bookshelf">
+      <font>
+         <Font size="23.0" />
+      </font></Label>
+   <Button mnemonicParsing="false" onAction="#onSerializeDeserializeBookButtonClick" text="Serialize/Deserialize Book" />
+  <Button onAction="#onAddBookButtonClick" text="Add Book" />
+</VBox>

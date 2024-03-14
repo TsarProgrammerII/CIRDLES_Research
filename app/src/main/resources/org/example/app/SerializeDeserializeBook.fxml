@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="227.0" prefWidth="401.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.app.SerializeDeserializeBookController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <SplitPane prefHeight="160.0" prefWidth="200.0">
+     <items>
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+            <children>
+               <ListView fx:id="listView" layoutX="-72.0" layoutY="-57.0" prefHeight="157.33333333333334" prefWidth="55.333333333333336" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            </children>
+         </AnchorPane>
+     </items>
+   </SplitPane>
+
+                <Button onAction="#onSerializeButtonClick" text="Serialize" />
+   <Button mnemonicParsing="false" onAction="#onDeserializeButtonClick" text="Deserialize" />
+   <Label text="Custom File Path" />
+   <TextField fx:id="filePathText" prefHeight="25.0" prefWidth="210.0" />
+</VBox>

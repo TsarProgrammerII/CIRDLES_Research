@@ -10,9 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Book implements Comparable, Serializable {
     private String author;
@@ -41,7 +39,7 @@ public class Book implements Comparable, Serializable {
         return this.publishDate;
     }
 
-    public static void prettyPrinter(Path path, TreeSet<Book> books) {
+    public static void prettyPrinter(Path path, Set<Book> books) {
         for (Book book : books) {
             try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) { //Buffered Writer to write the strings to the .csv file
                 writer.write(book.getAuthor() + "," + book.getTitle() + "," + book.getPublishDate());
@@ -52,12 +50,12 @@ public class Book implements Comparable, Serializable {
         }
     }
 
-    public static void serializeToCSV(Path path, TreeSet<Book> books) {
+    public static void serializeToCSV(Path path, Set<Book> books) {
         prettyPrinter(path, books);
     }
 
-    public static TreeSet<Book> deserializeFromCSV(Path path) {
-        TreeSet<Book> books = new TreeSet<Book>();
+    public static Set<Book> deserializeFromCSV(Path path) {
+        Set<Book> books = new TreeSet<Book>();
         try {
             List<String> lines = Files.readAllLines(path);
             for (String line : lines) {
@@ -72,7 +70,7 @@ public class Book implements Comparable, Serializable {
         }
     }
 
-    public static void serializeToXML(Path path, TreeSet<Book> books) {
+    public static void serializeToXML(Path path, Set<Book> books) {
         try {
             ObjectMapper mapper = new XmlMapper();
             mapper.writeValue(path.toFile(), books);
@@ -81,7 +79,7 @@ public class Book implements Comparable, Serializable {
         }
     }
 
-    public static TreeSet<Book> deserializeFromXML(Path path) {
+    public static Set<Book> deserializeFromXML(Path path) {
         try {
             ObjectMapper mapper = new XmlMapper();
             return mapper.readValue(path.toFile(), mapper.getTypeFactory().constructCollectionType(TreeSet.class, Book.class));
@@ -131,5 +129,9 @@ public class Book implements Comparable, Serializable {
         return concatenatedBook.toCharArray();
     }
 
+    @Override
+    public String toString() {
+        return "\"" + this.getTitle() + "\"" + " By " + this.getAuthor() + ", " + this.getPublishDate();
+    }
 
 }

@@ -1,11 +1,11 @@
 package org.example;
 
 import java.io.*;
-import java.util.TreeSet;
+import java.util.*;
 
 public class BinarySerialization {
 
-    public static void serializeToBinary(String path, TreeSet<Object> books) {
+    public static void serializeToBinary(String path, Set<Object> books) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
             oos.writeObject(books);
             System.out.println("Serialization completed. Data saved to: " + path);
@@ -15,7 +15,7 @@ public class BinarySerialization {
     }
 
     @SuppressWarnings("unchecked")
-    public static TreeSet<Object> deserializeFromBinary(String path) {
+    public static Set<Object> deserializeFromBinary(String path) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
             return (TreeSet<Object>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {

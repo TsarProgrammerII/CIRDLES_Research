@@ -8,15 +8,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookTest {
 
     private Book testBook, testBook1, testBook2;
-    private TreeSet<Book> testBooks = new TreeSet<>();
+    private Set<Book> testBooks = new TreeSet<>();
     @BeforeEach
     void setUp() {
         testBook = new Book("Author", "Title", "2023");
@@ -46,7 +45,7 @@ class BookTest {
         Path path = Paths.get("./Book.csv");
         Book.serializeToCSV(path, testBooks);
 
-        TreeSet<Book> otherBooks = Book.deserializeFromCSV(path);
+        Set<Book> otherBooks = Book.deserializeFromCSV(path);
 
         System.out.println(testBooks.equals(otherBooks));
 
@@ -58,7 +57,7 @@ class BookTest {
         Path path = Paths.get("./Books.xml");
         Book.serializeToXML(path, testBooks);
 
-        TreeSet<Book> otherBooks = Book.deserializeFromXML(path);
+        Set<Book> otherBooks = Book.deserializeFromXML(path);
 
         assertEquals(testBooks, otherBooks);
     }
@@ -66,10 +65,10 @@ class BookTest {
     @Test
     void binarySerializationDeserializationTest() {
         String path = "./Book.ser";
-        TreeSet<Object> bookObjects = (TreeSet<Object>) (Object) testBooks;
+        Set<Object> bookObjects = (TreeSet<Object>) (Object) testBooks;
         BinarySerialization.serializeToBinary(path, bookObjects);
 
-        TreeSet<Book> otherBooks = (TreeSet<Book>) (Object) BinarySerialization.deserializeFromBinary(path);
+        Set<Book> otherBooks = (TreeSet<Book>) (Object) BinarySerialization.deserializeFromBinary(path);
 
         assertEquals(testBooks, otherBooks);
     }

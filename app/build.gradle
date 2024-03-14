@@ -36,7 +36,8 @@ javafx {
 
 dependencies {
 
-  testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+implementation project(':core')
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
 
@@ -53,4 +54,9 @@ jlink {
 
 jlinkZip {
   group = 'distribution'
+}
+
+task runApp(type: JavaExec) { //Use this to run UI
+  getMainClass().set('org.example.app.BookApplication')
+  classpath = sourceSets.main.runtimeClasspath
 }
